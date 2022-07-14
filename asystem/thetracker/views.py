@@ -2,7 +2,28 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Job, Memo
 from .filters import JobFilter, MemoFilter
+from .forms import JobSelectForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
+
+
+# def SelectJob(request):
+#     job_list = Job.objects.all()
+
+#     if request.method == 'POST':
+#         form = JobSelectForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         return render(request, 'jfilter.html')
+#     print(form)
+#     return render(request, {'form' : form})
+
+# # create selection page to create a muiltple job memo
+# class AddMultipleMemoView(PermissionRequiredMixin, CreateView):
+#     permission_required = 'jobs.add_jobs'
+#     model = Memo
+#     template_name = 'add_memo.html'
+#     fields = '__all__'
 
 
 class HomeView(ListView):
@@ -39,6 +60,17 @@ class FilterByJobView(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = JobFilter(self.request.GET, queryset=self.get_queryset())
         return context
+    def SelectJob(self, request):
+        job_list = JobFilter(self.request.GET, queryset=self.get_queryset())
+
+        if request.method == 'POST':
+            form = JobSelectForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request, 'jfilter.html')
+        print(form)
+        return render(request, {'form' : form})
 
 
 class FilterByMemoView(ListView):
