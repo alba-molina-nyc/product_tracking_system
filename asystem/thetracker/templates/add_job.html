@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+{% if user.is_authenticated %}
+
+<h1>Add Job</h1>
+<hr>
+<a href="{% url 'job-filter'%}">Jobs List</a>
+<div class="mx-auto" style="width: 600px;">
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-hover">
+            {{ form.as_table }}
+        </table>
+        <button class=" btn btn-primary" type="submit">Add Job</button>
+    </form>
+</div>
+{% else %}
+<h4>you are not allowed here</h4>
+{% endif %}
+<hr>
+{% endblock %}

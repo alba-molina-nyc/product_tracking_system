@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<hr />
+<h1>Filter Memos</h1>
+
+<div class="mx-auto" style="width: 600px;">
+    <form method="GET">
+        <table class="table table-hover">
+            {{ filter.form.as_table }}
+        </table>
+        <button class=" btn btn-primary" type="submit">Filter by Memo</button>
+    </form>
+</div>
+
+<ul>
+    {% for memo in filter.qs %}
+
+    {{ memo.name }}
+    <td>{{ job.SKU }}</td>
+</ul>
+
+{% endfor %}
+
+{% endblock %}

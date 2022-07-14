@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'register'%}">Register</a>
+<div class="mx-auto" style="width: 300px;">
+    <h1>Login</h1>
+
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-hover">
+
+            {{ form.as_table }}
+        </table>
+        <button class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}

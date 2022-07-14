@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'home'%}">Back</a>
+
+<br>
+<hr>
+<div class="container">
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col">
+                <h4>Gem Stone King, Inc.</h4>
+                555 Eighth Avenue
+                <br>Room 300
+                <br>New York, New York 100018
+                <br>212-869-6776
+            </div>
+
+            <div class="col">
+                <h4>Consigned To:</h4>
+                {% if not job.memos.all %}
+                None at this time.
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="{% url 'add-memo' job.pk %}" role="button"
+                        aria-expanded="false" aria-controls="collapseExample" data-toggle="collapse">
+                        Create Memo
+                    </a>
+
+                </p>
+                {% else %}
+                {% for memo in job.memos.all %}
+                {{ memo.name }}
+                {% endfor %}
+
+                {% endif %}
+            </div>
+
+            <div class="col">
+                <h4>JOB ORDER</h4>
+                Date: {{ job.created }}
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">SKU</th>
+                    <th scope="col" class="text-center">Order Number</th>
+                    <th scope="col" class="text-center">Qty</th>
+                    <th scope="col" class="text-center">Stones</th>
+                    <th scope="col" class="text-center">Job Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">{{ job.SKU }}</td>
+                    <td class="text-center">{{ job.order_num }}</td>
+                    <td class="text-center"> {{ job.num_items }}</td>
+                    <td class="text-center">{{ job.num_stones }}</td>
+                    <td class="text-center">{{ job.description_text }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <div class="container">
+
+        {% if not job.memos.all %}
+        <p>
+            No memos yet..
+            <a class="btn btn-primary" data-toggle="collapse" href="{% url 'add-memo' job.pk %}" role="button"
+                aria-expanded="false" aria-controls="collapseExample" data-toggle="collapse">
+                Create Memo
+            </a>
+
+        </p>
+    </div>
+
+    {% else %}
+    {% for memo in job.memos.all %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <b>Total Qty:</b> {{ job.num_items }} <br>
+                <b>Total Stones:</b> {{ job.num_stones }}<br>
+                <b>Total Amount: </b>${{ job.calculate_total_amt }}0
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-start">
+                    <b>Received By:</b> <br>
+                    <div class="col">
+                        Name: ___________________________________
+                    </div>
+                    <div class="col">
+                        Signature: ________________________________
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+
+{% endblock %}

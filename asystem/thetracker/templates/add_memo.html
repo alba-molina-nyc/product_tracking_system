@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+{% if user.is_authenticated %}
+
+<h1> Create Memo </h1>
+<hr>
+
+<div class="mx-auto" style="width: 600px;">
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-hover">
+            {{ form.as_table }}
+        </table>
+        <button>Add Memo</button>
+    </form>
+</div>
+{% else %}
+<h4>you are not allowed here</h4>
+{% endif %}
+<hr>
+<a href="{% url 'home'%}">Jobs List</a>
+
+
+
+
+
+{% endblock %}

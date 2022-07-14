@@ -1,0 +1,90 @@
+{% extends 'base.html' %} {% block content %}
+{% if user.is_authenticated %}
+<a href="{% url 'add-job'%}">Add Job</a>
+
+
+{% endif %}
+
+<a href="{% url 'job-filter'%}">Filter By Job</a>
+<a href="{% url 'memo-filter'%}">Filter by Memo</a>
+
+<h1>Filter Jobs</h1>
+<hr>
+<div class="mx-auto" style="width: 600px;">
+    <form method="GET">
+        <table class="table table-hover">
+            {{ filter.form.as_table }}
+        </table>
+        <button class=" btn btn-primary" type="submit">Filter by Job</button>
+    </form>
+</div>
+<hr>
+<h1> All Jobs</h1>
+<hr>
+
+{% for job in filter.qs %}
+
+
+<table class="table table-sm">
+
+
+    <thead class=" thead-dark">
+
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Select</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Number of Stones</th>
+            <th scope="col">Description</th>
+            <th scope="col">Created By: (In-House)</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Date Updated</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+
+            <th scope="row"> <a href="{% url 'job-detail' job.pk %}"> See Details</a> </th>
+
+
+            <td>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" checked="checked" value="{{job.pk}}" name="boxes">
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{job.pk}}" name="boxes">
+                </div>
+
+            </td>
+            <td>{{ job.order_num }}</td>
+            <td>{{ job.SKU }}</td>
+            <td>{{ job.num_items }}</td>
+            <td>{{ job.num_stones }}</td>
+            <td>{{ job.description_text }}</td>
+            <td>created by (In-House): {{ job.creator_name.id }} {{ job.creator_name }} -
+                {{ job.creator_name.first_name }}
+                {{ job.creator_name.last_name }}
+                - {{ job.creator_name.email }}</td>
+            <td>{{ job.created }}</td>
+            <td>{{ job.updated }}</td>
+
+        </tr>
+    </tbody>
+</table>
+{% endfor %}
+<button class="btn btn-secondary">Select All</button>
+
+
+
+
+
+<hr />
+
+{% endblock %}
