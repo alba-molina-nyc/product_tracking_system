@@ -76,16 +76,18 @@ class FilterByJobView(ListView):
         print(form)
         return render(request, {'form' : form})
 
-    def create_memo(self, request):
-        job_list = JobFilter(self.request.GET, queryset=self.get_queryset())
-        form = MemoForm()
+    def create_memo(request):
+        MemoFormSet = formset_factory(MemoForm)
+        formset = MemoFormSet()
+        # form = MemoForm()
+
         if request.method == 'POST':
-            form = MemoForm(request.POST)
-            if form.is_valid():
-                form.save()
+            formset = MemoForm(request.POST)
+            if formset.is_valid():
+                formset.save()
                 return redirect('/')
-        context = {'form': form}
-        return render(request, 'jfilter.html', context)
+        context = {'formset': formset}
+        return render(request, 'memo_form.html', context)
 
 
 class FilterByMemoView(ListView):
