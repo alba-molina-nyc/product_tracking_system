@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 # Create your models here.
+class MemoWriter(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    def __str__(self):
+        return self.name
 
 class Job(models.Model):
     order_num = models.CharField(max_length=275)
@@ -32,6 +39,9 @@ class Memo(models.Model):
     email = models.EmailField(max_length=275)
     date_set = models.DateField(auto_now_add=True)
     job = models.ForeignKey(Job, blank=True, null=True, related_name='memos',on_delete=models.CASCADE)
+    # memowriter = models.ForeignKey(MemoWriter, null=True, on_delete= models.SET_NULL)
+
+
 
     def get_absolute_url(self):
        

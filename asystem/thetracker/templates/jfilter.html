@@ -21,28 +21,10 @@
 <hr>
 <h1> All Jobs</h1>
 <hr>
-<h1>Select Jobs to Generate Memo</h1>
 
 
 
 
-<!-- <form method="POST">
-    {% csrf_token %}
-
-
-</form> -->
-
-
-
-<div>
-    <div class="col-sm-8 input">
-        <form method="post" enctype='multipart/form-data'>
-            {% csrf_token %}
-            {{ form }}
-            <input class="btn btn-submit pull-right" href='add_memo.html' type="submit" value="Choose" />
-        </form>
-    </div>
-</div>
 {% for job in filter.qs %}
 
 
@@ -108,5 +90,11 @@
 
 
 <hr />
+<h1>create memo</h1>
 
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="Submit">
+</form>
 {% endblock %}
