@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Job, Memo
 from .filters import JobFilter, MemoFilter
@@ -27,11 +27,16 @@ from . import views
 #     fields = '__all__'
 
 def create_memo(request):
-    form = MemoForm
-    if request.method=='POST':
-        print('printing post', request.POST)
+    form = MemoForm()
+    if request.method == 'POST':
+        # print('printing post', request.POST)
+        form = MemoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        
             
-        context = {
+    context = {
         'form': form
         
     }
