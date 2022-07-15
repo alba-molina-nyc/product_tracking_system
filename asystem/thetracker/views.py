@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Job, Memo
 from .filters import JobFilter, MemoFilter
-from .forms import JobSelectForm
+from .forms import JobSelectForm, MemoForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from . import views
 
 
 # def SelectJob(request):
@@ -24,6 +25,18 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 #     model = Memo
 #     template_name = 'add_memo.html'
 #     fields = '__all__'
+
+def create_memo(request):
+    form = MemoForm
+    if request.method=='POST':
+        print('printing post', request.POST)
+            
+        context = {
+        'form': form
+        
+    }
+    return render(request, 'memo_form.html', context)
+
 
 
 class HomeView(ListView):
